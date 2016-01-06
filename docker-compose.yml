@@ -1,0 +1,36 @@
+redis:
+  image: redis
+
+mysql:
+  image: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=677oa2j56mL0g6C
+    - MYSQL_USER=automateeverything
+    - MYSQL_PASSWORD=EKu99110twxihMa
+    - MYSQL_DATABASE=automateeverything
+
+phpmyadmin:
+  environment:
+   - VIRTUAL_HOST=mysql.automateeverything.dev
+  expose:
+   - '80'
+  ports:
+   - '80'
+  image: matthewbaggett/phpmyadmin:latest
+  links:
+   - mysql:db
+
+web:
+  build: .
+  ports:
+    - "9430:80"
+  links:
+    - "redis:redis"
+    - "mysql:db"
+  volumes:
+    - ./src:/app/src
+    - ./features:/app/features
+    - ./vendor:/app/vendor:ro
+    - ./docker:/app/docker:ro
+  environment:
+   - VIRTUAL_HOST=automateeverything.dev
