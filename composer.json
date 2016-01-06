@@ -36,7 +36,7 @@
   "prefer-stable": true,
   "minimum-stability": "dev",
   "require": {
-    "slim/slim": "2.*",
+    "slim/slim": "3.*",
     "filp/whoops": "1.*",
     "zeuxisoo/slim-whoops": "dev-master",
     "raveren/kint": "dev-master",
