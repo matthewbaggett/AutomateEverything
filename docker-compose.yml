@@ -23,7 +23,7 @@ phpmyadmin:
 web:
   build: .
   ports:
-    - "9430:80"
+    - "34346:80"
   links:
     - "redis:redis"
     - "mysql:db"
