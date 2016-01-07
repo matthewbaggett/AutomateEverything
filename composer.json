@@ -50,7 +50,8 @@
     "eventsd/service": "dev-master",
     "react/react": "0.4.*",
     "yasharrashedi/limitless-led": "dev-master",
-    "slim/twig-view": "dev-master"
+    "slim/twig-view": "dev-master",
+    "twbs/bootstrap": "^4.0@dev"
   },
   "require-dev": {
     "phpunit/phpunit": "4.4.*",

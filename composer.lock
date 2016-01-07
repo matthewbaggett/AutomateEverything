@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3b9b7ac3f8e74e75636ee67a36f24663",
-    "content-hash": "f92cf782459999376d3b75bc40e20392",
+    "hash": "f69f20e3942692fb7b93a297973ff988",
+    "content-hash": "1d32c73cfec47006153b6952c2aa4570",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1610,6 +1610,57 @@
             "time": "2015-02-15 11:30:33"
         },
         {
+            "name": "twbs/bootstrap",
+            "version": "v4.0.0-alpha.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "48938155eb24b4ccdde09426066869504c6dab3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/48938155eb24b4ccdde09426066869504c6dab3c",
+                "reference": "48938155eb24b4ccdde09426066869504c6dab3c",
+                "shasum": ""
+            },
+            "replace": {
+                "twitter/bootstrap": "self.version"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
+                },
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                }
+            ],
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "homepage": "http://getbootstrap.com",
+            "keywords": [
+                "JS",
+                "css",
+                "framework",
+                "front-end",
+                "mobile-first",
+                "responsive",
+                "sass",
+                "web"
+            ],
+            "time": "2015-12-08 17:51:50"
+        },
+        {
             "name": "twig/twig",
             "version": "v1.23.1",
             "source": {
@@ -2838,6 +2889,7 @@
         "eventsd/service": 20,
         "yasharrashedi/limitless-led": 20,
         "slim/twig-view": 20,
+        "twbs/bootstrap": 20,
         "facebook/webdriver": 20,
         "thru.io/slim-route-test": 20
     },
