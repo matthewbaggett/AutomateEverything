@@ -15,8 +15,11 @@ class AutomateEverything
     /** @var \Slim\App */
     private $slim;
 
+    private $debugMode = false;
+
     public function __construct()
     {
+        $this->__init_env();
         $this->__init_slim();
         $this->__init_slim_twig_view();
         $this->__init_routes();
@@ -27,6 +30,12 @@ class AutomateEverything
         return $this->slim->run();
     }
 
+    protected function __init_env()
+    {
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    }
 
     protected function __init_slim()
     {
@@ -37,7 +46,7 @@ class AutomateEverything
     {
         $controllers = [];
         $controllers = array_merge($controllers, $this->__scan_routes('src/Controllers'));
-        foreach($controllers as $controller) {
+        foreach ($controllers as $controller) {
             $app = $this->slim;
             require_once($controller);
         }
@@ -50,11 +59,12 @@ class AutomateEverything
         });
     }
 
-    protected function __scan_routes($directory){
+    protected function __scan_routes($directory)
+    {
         $controllers = [];
         $files = scandir($directory);
-        foreach($files as $file){
-            switch($file){
+        foreach ($files as $file) {
+            switch ($file) {
                 case '.':
                 case '..':
                     break;
@@ -65,7 +75,8 @@ class AutomateEverything
         return $controllers;
     }
 
-    protected function __init_slim_twig_view(){
+    protected function __init_slim_twig_view()
+    {
 
         // Get container
         $container = $this->slim->getContainer();
@@ -73,7 +84,7 @@ class AutomateEverything
         // Register component on container
         $container['view'] = function ($container) {
             $view = new \Slim\Views\Twig('views', [
-                'cache' => 'cache/twig'
+                'cache' => $this->isDebugMode()?false:'cache/twig'
             ]);
             $view->addExtension(new \Slim\Views\TwigExtension(
                 $container['router'],
@@ -82,5 +93,16 @@ class AutomateEverything
 
             return $view;
         };
+    }
+
+    public function setDebugMode($enableDebugMode = true)
+    {
+        $this->debugMode = $enableDebugMode;
+        return $this;
+    }
+
+    public function isDebugMode()
+    {
+        return $this->debugMode;
     }
 }
