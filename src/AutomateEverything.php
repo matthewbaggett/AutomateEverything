@@ -17,12 +17,31 @@ class AutomateEverything
 
     private $debugMode = false;
 
+    static private $instance;
+
+    private $csses;
+    private $javascripts;
+
+    /**
+     * @return AutomateEverything
+     */
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function __construct()
     {
         $this->__init_env();
         $this->__init_slim();
         $this->__init_slim_twig_view();
         $this->__init_routes();
+
+        $this->addJavascriptFile('vendor/twbs/bootstrap/dist/js/bootstrap.js');
+        $this->addCssFile('vendor/twbs/bootstrap/dist/css/bootstrap.css');
     }
 
     public function run()
@@ -104,5 +123,35 @@ class AutomateEverything
     public function isDebugMode()
     {
         return $this->debugMode;
+    }
+
+    public function defaultViewParameters()
+    {
+        $parameters = [];
+        $parameters['javascripts'] = $this->getJavascripts();
+        $parameters['csses'] = $this->getCSSes();
+        return $parameters;
+    }
+
+    public function getJavascripts()
+    {
+        return $this->javascripts;
+    }
+
+    public function getCSSes()
+    {
+        return $this->csses;
+    }
+
+    public function addJavascriptFile($path)
+    {
+        $this->javascripts[] = $path;
+        return $this;
+    }
+
+    public function addCssFile($path)
+    {
+        $this->csses[] = $path;
+        return $this;
     }
 }

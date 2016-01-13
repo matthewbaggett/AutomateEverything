@@ -2,6 +2,6 @@
 
 require_once("../bootstrap.php");
 
-$ae = new \AE\AutomateEverything();
+$ae = \AE\AutomateEverything::getInstance();
 $ae->setDebugMode(true);
 $ae->run();
