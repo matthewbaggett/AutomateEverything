@@ -7,6 +7,7 @@ namespace AE\Models\Base;
  * @var $light_id INTEGER
  * @var $type ENUM("White","RGB","RGBW")
  * @var $state ENUM("Available","Missing","Disabled")
+ * @var $lightSettings TEXT
  */
 abstract class LightEndEffector extends BaseEndEffector
 {

@@ -4,6 +4,7 @@ namespace AE\Models\Base;
 /**
  * Class LightState
  * @package AE\Models
+ * @var $light_state_id INTEGER
  * @var $light_id INTEGER
  * @var $created DATETIME
  * @var $colourData TEXT
