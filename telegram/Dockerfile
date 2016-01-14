@@ -1,6 +1,4 @@
 FROM node:5-onbuild
 EXPOSE 5393
-ADD cats.jpg
-ADD telegram-bot.js
+ADD * /app/
 
-CMD ["node", "telegram-bot.js"]
