@@ -31,6 +31,9 @@
     },{
       "url": "https://github.com/matthewbaggett/LimitlessLED.git",
       "type": "git"
+    },{
+      "url": "http://git.thru.io/Thruio/RenderCat.git",
+      "type": "git"
     }
   ],
   "prefer-stable": true,
@@ -49,7 +52,8 @@
     "react/react": "0.4.*",
     "yasharrashedi/limitless-led": "dev-master",
     "slim/twig-view": "dev-master",
-    "twbs/bootstrap": "^4.0@dev"
+    "twbs/bootstrap": "^4.0@dev",
+    "thru.io/rendercat": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "4.4.*",

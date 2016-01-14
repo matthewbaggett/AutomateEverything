@@ -2,10 +2,14 @@
 
 namespace AE;
 
+use Thru\RenderCat\Components\CompressableAssetDigest;
+use Thru\RenderCat\Components\CssAsset;
+use Thru\RenderCat\Components\CssAssetDigest;
+use Thru\RenderCat\Components\JavascriptAsset;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Thru\RenderCat\Components\JavascriptAssetDigest;
 use Twig_Environment;
-use Twig_Loader_Filesystem;
 use Slim\App as SlimApp;
 
 class AutomateEverything
@@ -40,8 +44,13 @@ class AutomateEverything
         $this->__init_slim_twig_view();
         $this->__init_routes();
 
+        $this->csses = new CssAssetDigest($this->debugMode);
+        $this->javascripts = new JavascriptAssetDigest($this->debugMode);
+        $this->addJavascriptFile('vendor/twbs/bootstrap/docs/assets/js/vendor/jquery.min.js');
         $this->addJavascriptFile('vendor/twbs/bootstrap/dist/js/bootstrap.js');
+        $this->addJavascriptFile('vendor/twbs/bootstrap/docs/assets/js/ie10-viewport-bug-workaround.js');
         $this->addCssFile('vendor/twbs/bootstrap/dist/css/bootstrap.css');
+        $this->addCssFile('public/css/fix-top-nav-bar.css');
     }
 
     public function run()
@@ -102,7 +111,7 @@ class AutomateEverything
 
         // Register component on container
         $container['view'] = function ($container) {
-            $view = new \Slim\Views\Twig('views', [
+            $view = new \Slim\Views\Twig('src/Views', [
                 'cache' => $this->isDebugMode()?false:'cache/twig'
             ]);
             $view->addExtension(new \Slim\Views\TwigExtension(
@@ -127,31 +136,55 @@ class AutomateEverything
 
     public function defaultViewParameters()
     {
+        $compressedCssPath = "cache/{$this->getCsses()->getHash()}" . ($this->isDebugMode() ? null : '.min')  . ".css";
+        $compressedJsPath = "cache/{$this->getJavascripts()->getHash()}" . ($this->isDebugMode() ? null : '.min') . ".js";
+        file_put_contents("public/" . $compressedCssPath, $this->getCSSes()->render());
+        file_put_contents("public/" . $compressedJsPath, $this->getJavascripts()->render());
         $parameters = [];
-        $parameters['javascripts'] = $this->getJavascripts();
-        $parameters['csses'] = $this->getCSSes();
+        $parameters['csses'] = [
+            $compressedCssPath
+        ];
+        $parameters['javascripts'] = [
+            $compressedJsPath
+        ];
         return $parameters;
     }
 
+    /**
+     * @return CompressableAssetDigest
+     */
     public function getJavascripts()
     {
         return $this->javascripts;
     }
 
+    /**
+     * @return CompressableAssetDigest
+     */
     public function getCSSes()
     {
         return $this->csses;
     }
 
+    /**
+     * @param $path
+     * @return $this
+     */
     public function addJavascriptFile($path)
     {
-        $this->javascripts[] = $path;
+        $this->javascripts->add(new JavascriptAsset($path));
         return $this;
     }
 
+    /**
+     * @param $path
+     * @return $this
+     */
     public function addCssFile($path)
     {
-        $this->csses[] = $path;
+        $this->csses->add(new CssAsset($path));
         return $this;
     }
+
+
 }

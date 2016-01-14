@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c08a8ae7180493ad9047abce680f2b82",
-    "content-hash": "9a53729f51c8329f0a2dd40aea9cba96",
+    "hash": "ddbeffe24e60cbaa28082d4018d180b3",
+    "content-hash": "cafd2fd38764320b8d5ff8ada6adac6d",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -354,6 +354,113 @@
                 "shell"
             ],
             "time": "2012-03-25 18:18:10"
+        },
+        {
+            "name": "matthiasmullie/minify",
+            "version": "1.3.32",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/minify.git",
+                "reference": "140c714688908afcecde87338c8309233bdc2519"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/140c714688908afcecde87338c8309233bdc2519",
+                "reference": "140c714688908afcecde87338c8309233bdc2519",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "matthiasmullie/path-converter": "~1.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "matthiasmullie/scrapbook": "~1.0",
+                "phpunit/phpunit": "~4.8",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "bin": [
+                "bin/minifycss",
+                "bin/minifyjs"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\Minify\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "minify@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSS & JS minifier",
+            "homepage": "http://www.minifier.org",
+            "keywords": [
+                "JS",
+                "css",
+                "javascript",
+                "minifier",
+                "minify"
+            ],
+            "time": "2016-01-11 02:10:11"
+        },
+        {
+            "name": "matthiasmullie/path-converter",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/path-converter.git",
+                "reference": "83609c1bb251b2540eba912615571a501a0a06a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/83609c1bb251b2540eba912615571a501a0a06a6",
+                "reference": "83609c1bb251b2540eba912615571a501a0a06a6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\PathConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "pathconverter@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Relative path converter",
+            "homepage": "http://github.com/matthiasmullie/path-converter",
+            "keywords": [
+                "converter",
+                "path",
+                "paths",
+                "relative"
+            ],
+            "time": "2016-01-07 00:41:13"
         },
         {
             "name": "nategood/commando",
@@ -1417,6 +1524,43 @@
             ],
             "description": "A simple, well-tested JSON pretty printer and related stuff",
             "time": "2015-02-18 10:41:12"
+        },
+        {
+            "name": "thru.io/rendercat",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "http://git.thru.io/Thruio/RenderCat.git",
+                "reference": "b61939a83cc932ceb0f99e501718baef6299a5fa"
+            },
+            "require": {
+                "matthiasmullie/minify": "^1.3"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "1.5.*@dev",
+                "phpunit/phpunit": ">=4.7",
+                "raveren/kint": "dev-master",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Thru\\RenderCat\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Thru\\RenderCat\\Test\\": "tests/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Matthew Baggett",
+                    "email": "matthew@baggett.me"
+                }
+            ],
+            "description": "Matts special front end library.",
+            "time": "2016-01-14 15:06:38"
         },
         {
             "name": "thru.io/session",
@@ -2857,6 +3001,7 @@
         "yasharrashedi/limitless-led": 20,
         "slim/twig-view": 20,
         "twbs/bootstrap": 20,
+        "thru.io/rendercat": 20,
         "facebook/webdriver": 20,
         "thru.io/slim-route-test": 20,
         "fzaninotto/faker": 20
