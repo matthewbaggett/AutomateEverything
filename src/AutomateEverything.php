@@ -39,10 +39,10 @@ class AutomateEverything
 
     public function __construct()
     {
-        $this->__init_env();
-        $this->__init_slim();
-        $this->__init_slim_twig_view();
-        $this->__init_routes();
+        $this->__initEnv();
+        $this->__initSlim();
+        $this->__initSlimTwigView();
+        $this->__initRoutes();
 
         $this->csses = new CssAssetDigest($this->debugMode);
         $this->javascripts = new JavascriptAssetDigest($this->debugMode);
@@ -58,22 +58,22 @@ class AutomateEverything
         return $this->slim->run();
     }
 
-    protected function __init_env()
+    protected function __initEnv()
     {
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
     }
 
-    protected function __init_slim()
+    protected function __initSlim()
     {
         $this->slim = new SlimApp;
     }
 
-    protected function __init_routes()
+    protected function __initRoutes()
     {
         $controllers = [];
-        $controllers = array_merge($controllers, $this->__scan_routes('src/Controllers'));
+        $controllers = array_merge($controllers, $this->__scanRoutes('src/Controllers'));
         foreach ($controllers as $controller) {
             $app = $this->slim;
             require_once($controller);
@@ -87,7 +87,7 @@ class AutomateEverything
         });
     }
 
-    protected function __scan_routes($directory)
+    protected function __scanRoutes($directory)
     {
         $controllers = [];
         $files = scandir($directory);
@@ -103,7 +103,7 @@ class AutomateEverything
         return $controllers;
     }
 
-    protected function __init_slim_twig_view()
+    protected function __initSlimTwigView()
     {
 
         // Get container

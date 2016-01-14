@@ -1,0 +1,26 @@
+language: php
+
+
+php:
+  - hhvm
+  - 7.0
+  - nightly
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - php: nightly
+
+before_script :
+  - composer install
+  - mysql -e 'create database autoeverything_test;'
+  - mysql -e "use mysql; SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis'); FLUSH PRIVILEGES;"
+
+script:
+  - ./vendor/bin/phpcs --warning-severity=6 --standard=PSR2 *.php src config public tests
+  - phpunit
+
+notifications:
+  email:
+    - matthew@baggett.me
+  slack: thruio:m7cGYXmdz261AkGDfiRVBHmY

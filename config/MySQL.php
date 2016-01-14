@@ -19,9 +19,9 @@ if (isset($_SERVER['DB_PORT'])) {
         'db_type' => 'Mysql',
         'db_hostname' => "localhost",
         'db_port' => 3306,
-        'db_username' => "autoeverything",
-        'db_password' => "87d65w0ws713CfX",
-        'db_database' => "autoeverything",
+        'db_username' => "travis",
+        'db_password' => "travis",
+        'db_database' => "autoeverything_test",
     );
 }
 $database = new \Thru\ActiveRecord\DatabaseLayer($databaseConfig);
