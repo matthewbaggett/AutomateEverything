@@ -12,13 +12,13 @@ matrix:
     - php: nightly
 
 before_script :
-  - composer install
+  - cd webapp; composer install
   - mysql -e 'create database autoeverything_test;'
   - mysql -e "use mysql; SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis'); FLUSH PRIVILEGES;"
 
 script:
-  - ./vendor/bin/phpcs --warning-severity=6 --standard=PSR2 *.php src config public tests
-  - phpunit
+  - ./vendor/bin/phpcs --warning-severity=6 --standard=PSR2 webapp/*.php webapp/src webapp/config webapp/public webapp/tests
+  - cd webapp; phpunit
 
 notifications:
   email:
