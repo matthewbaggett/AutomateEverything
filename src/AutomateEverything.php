@@ -185,6 +185,4 @@ class AutomateEverything
         $this->csses->add(new CssAsset($path));
         return $this;
     }
-
-
 }

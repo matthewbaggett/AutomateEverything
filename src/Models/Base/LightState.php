@@ -30,8 +30,9 @@ class LightState extends BaseStoredObject
     /**
      * @return bool|float|string|integer
      */
-    private function getColourData($element){
-        if(!is_array($this->colourData) && !is_object($this->colourData)) {
+    private function getColourData($element)
+    {
+        if (!is_array($this->colourData) && !is_object($this->colourData)) {
             $decoded = json_decode($this->colourData, true);
             if ($decoded !== null) {
                 $this->colourData = $decoded;
