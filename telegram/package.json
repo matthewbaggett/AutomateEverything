@@ -1,0 +1,13 @@
+{
+  "name": "automate-everything-telegram-bot",
+  "contributors": [{
+    "name": "Matthew Baggett",
+    "email": "matthew@baggett.me"
+  }],
+  "scripts": {
+    "start": "node telegram.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "~0.19"
+   }
+}
