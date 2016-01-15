@@ -1,0 +1,8 @@
+vendor
+.idea
+cache/twig/*
+build/
+public/cache/*.css
+public/cache/*.js
+public/cache/*.css.gz
+public/cache/*.js.gz
