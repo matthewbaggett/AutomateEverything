@@ -16,7 +16,7 @@ before_script :
   - mysql -e "use mysql; SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('travis'); FLUSH PRIVILEGES;"
 
 script:
-  - cd webapp; ./vendor/bin/phpcs --warning-severity=6 --standard=PSR2 webapp/*.php webapp/src webapp/config webapp/public webapp/tests
+  - cd webapp; ./vendor/bin/phpcs --warning-severity=6 --standard=PSR2 *.php src config public tests
   - cd webapp; phpunit
 
 notifications:
