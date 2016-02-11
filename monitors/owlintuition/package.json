@@ -1,0 +1,15 @@
+{
+  "name": "AutomateEverythingMonitorOwlIntuition",
+  "version": "0.0.1",
+  "description": "Monitor for Owl Intuition units",
+  "dependencies": {
+    "mysql": "^2.10.2",
+    "owlintuition": "^0.3.1",
+    "redis": "^2.4.2",
+    "request": "^2.67.0"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  }
+}
