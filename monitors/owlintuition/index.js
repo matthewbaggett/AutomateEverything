@@ -1,7 +1,9 @@
 const os = require("os");
 const fs = require('fs');
 const request = require('request');
-
+const sleep = require('sleep');
+const php = require('phpjs');
+const OWL = require("owlintuition");
 
 var environment = php.ksort(process.env);
 
@@ -21,10 +23,10 @@ console.log(mysqlConnectionOptions);
 process.exit();
 */
 
+console.log("Connecting to MySQL");
 var mysqlConnection = mysql.createConnection(mysqlConnectionOptions);
 mysqlConnection.connect();
 
-var OWL = require('owl');
 var owl = new OWL();
 owl.monitor();
 
@@ -42,3 +44,5 @@ var redis = require("redis"),
 owl.on('electricity', function( event ) {
     console.log(event);
 });
+
+console.log("Started, waiting for data");
