@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ddbeffe24e60cbaa28082d4018d180b3",
-    "content-hash": "cafd2fd38764320b8d5ff8ada6adac6d",
+    "hash": "3c79a8316c689940683cf06efde32e5c",
+    "content-hash": "d8d81d2bac3469dc74acf9342a6182ed",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1530,8 +1530,8 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "http://git.thru.io/Thruio/RenderCat.git",
-                "reference": "b61939a83cc932ceb0f99e501718baef6299a5fa"
+                "url": "https://github.com/Thruio/rendercat.git",
+                "reference": "66238071ba6f2a661f51809af7bbceb9e522e7e4"
             },
             "require": {
                 "matthiasmullie/minify": "^1.3"
@@ -1560,7 +1560,7 @@
                 }
             ],
             "description": "Matts special front end library.",
-            "time": "2016-01-14 15:06:38"
+            "time": "2016-01-14 15:42:43"
         },
         {
             "name": "thru.io/session",
@@ -1568,12 +1568,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Thruio/Session.git",
-                "reference": "2a70651acbd26512e45e4417be76e7538901e895"
+                "reference": "07ddda7a6348192a78a61ed566143bc0b658b8cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Thruio/Session/zipball/2a70651acbd26512e45e4417be76e7538901e895",
-                "reference": "2a70651acbd26512e45e4417be76e7538901e895",
+                "url": "https://api.github.com/repos/Thruio/Session/zipball/07ddda7a6348192a78a61ed566143bc0b658b8cd",
+                "reference": "07ddda7a6348192a78a61ed566143bc0b658b8cd",
                 "shasum": ""
             },
             "require": {
@@ -1593,7 +1593,7 @@
                 }
             ],
             "description": "Sessions handler",
-            "time": "2015-07-22 13:52:19"
+            "time": "2016-01-14 16:34:16"
         },
         {
             "name": "thru.io/translation",
@@ -1601,12 +1601,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Thruio/Translation.git",
-                "reference": "bd9f2e43fd9b7b288f649447c732b02a4461dde2"
+                "reference": "06b76973f066de13e412409baa44b4107819c126"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Thruio/Translation/zipball/bd9f2e43fd9b7b288f649447c732b02a4461dde2",
-                "reference": "bd9f2e43fd9b7b288f649447c732b02a4461dde2",
+                "url": "https://api.github.com/repos/Thruio/Translation/zipball/06b76973f066de13e412409baa44b4107819c126",
+                "reference": "06b76973f066de13e412409baa44b4107819c126",
                 "shasum": ""
             },
             "require": {
@@ -1617,6 +1617,7 @@
             "require-dev": {
                 "codeclimate/php-test-reporter": "dev-master",
                 "fzaninotto/faker": "1.5.*@dev",
+                "squizlabs/php_codesniffer": "*",
                 "thru.io/active_record_migrations": "dev-master"
             },
             "bin": [
@@ -1636,7 +1637,7 @@
                 }
             ],
             "description": "Support multi-lingual in YOUR application! :D",
-            "time": "2015-07-22 13:52:19"
+            "time": "2016-01-14 16:23:33"
         },
         {
             "name": "thru.io/uuid",
