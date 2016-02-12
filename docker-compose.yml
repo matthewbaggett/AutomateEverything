@@ -9,10 +9,10 @@ monitor-owl-intuition:
 mysql:
   image: 'mysql:latest'
   environment:
-    - MYSQL_DATABASE=videopile
-    - MYSQL_PASSWORD=nZo61RO06Jh844n
-    - MYSQL_ROOT_PASSWORD=X4A140d0kmgedUl
-    - MYSQL_USER=videopile
+    - MYSQL_DATABASE=automate
+    - MYSQL_PASSWORD=Gx3Ocw7Jhl9GVNd
+    - MYSQL_ROOT_PASSWORD=cN6Dox5UEXZ0VEo
+    - MYSQL_USER=automate
   ports:
     - '3306'
   restart: always
