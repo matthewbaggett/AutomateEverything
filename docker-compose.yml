@@ -1,0 +1,30 @@
+monitor-owl-intuition:
+  build: monitors/owlintuition
+  #image: 'automateeverything/monitor-owl-intuition:latest'
+  #volumes:
+  #  - ./monitors/owlintuition:/app
+  links:
+    - mysql:db
+    - redis
+mysql:
+  image: 'mysql:latest'
+  environment:
+    - MYSQL_DATABASE=videopile
+    - MYSQL_PASSWORD=nZo61RO06Jh844n
+    - MYSQL_ROOT_PASSWORD=X4A140d0kmgedUl
+    - MYSQL_USER=videopile
+  ports:
+    - '3306'
+  restart: always
+phpmyadmin:
+  image: 'corbinu/docker-phpmyadmin:latest'
+  environment:
+    - VIRTUAL_HOST=mysql.ae.dev
+  links:
+    - mysql
+  ports:
+    - '80'
+  restart: always
+redis:
+  image: 'redis:latest'
+
