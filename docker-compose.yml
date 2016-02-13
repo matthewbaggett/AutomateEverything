@@ -8,10 +8,24 @@ monitor-owl-intuition:
   ports:
     - "22600:22600/udp"
 
-monitor-redis:
-  build: monitors/redis
+monitor-philips-hue:
+  build: monitors/philips-hue
+  volumes:
+      - ./monitors/philips-hue:/app
   links:
    - redis
+
+#monitor-redis:
+#  build: monitors/redis
+#  links:
+#   - redis
+
+applications-power-alert:
+  build: applications/power-alert
+  volumes:
+    - ./applications/power-alert:/app
+  links:
+    - redis
 
 #mysql:
 #  image: 'mysql:latest'
@@ -23,6 +37,7 @@ monitor-redis:
 #  ports:
 #    - '3306'
 #  restart: always
+
 #phpmyadmin:
 #  image: 'corbinu/docker-phpmyadmin:latest'
 #  environment:
@@ -32,6 +47,7 @@ monitor-redis:
 #  ports:
 #    - '80'
 #  restart: always
+
 redis:
   image: 'redis:latest'
 

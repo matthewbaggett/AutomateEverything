@@ -1,5 +1,5 @@
 const php = require('phpjs');
-const OWL = require("owl-intuition");
+const OWL = require("owlintuition");
 
 var environment = php.ksort(process.env);
 
