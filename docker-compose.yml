@@ -1,8 +1,8 @@
 monitor-owl-intuition:
-  build: monitors/owlintuition
+  build: monitors/owl-intuition
   #image: 'automateeverything/monitor-owl-intuition:latest'
   #volumes:
-  #  - ./monitors/owlintuition:/app
+  #  - ./monitors/owl-intuition:/app
   links:
     - redis
   ports:
