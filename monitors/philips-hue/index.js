@@ -16,10 +16,12 @@ var redisReceiver = redis.createClient({
 
 var hue = new Hue();
 
-var conf_file = process.env.HOME+'/.philips-hue.json';
+var pollScannerDelayms = 1000;
+
 var lightState = {};
 
 var pollScanner = function(){
+    console.log("pollscanner");
     hue.getLights()
         .then(function (lights) {
             for (var key in lights){
@@ -123,18 +125,50 @@ redisReceiver.on("message", function(channel, message) {
     }
 });
 
+var philipsHueAuth = function() {
+    redisReceiver.get("philipshue.auth.login", function(err, reply){
+        var auth;
+        console.log("reply from 'philipshue.auth.login': " + reply);
+        if(reply == null || reply == '{}'){
+            //do Auth
+            auth = {};
+            console.log("Searching for bridges");
+            hue.getBridges()
+                .then(function(bridges){
+                    console.log("Bridges:", bridges);
+                    var bridge = bridges[0]; // use 1st bridge
+                    console.log("bridge: "+bridge);
+                    auth.ip = bridge;
+                    return hue.auth(bridge);
+                })
+                .then(function(username) {
+                    auth.username = username;
+                    console.log("username: " + username);
+                    redisSender.set("philipshue.auth.login", JSON.stringify(auth));
+                    philipsHueAuth();
+                })
+                .catch(function(err){
+                    console.error(err.stack || err);
+                    philipsHueAuth();
+                });
+        }else {
+            auth = JSON.parse(reply);
+        }
 
-hue
-    .login(conf_file)
-    .then(function(conf){
-        return hue.light(1).on();
-    })
-    .then(function(res){
-        redisReceiver.subscribe("lights_request");
-        console.log("Result?", res);
-        setInterval(pollScanner, 1000);
-    })
-    .catch(function(err){
-        console.error(err.stack || err);
+        if(typeof auth.ip != 'undefined') {
+            hue = new Hue;
+            hue.bridge = auth.ip;
+            hue.username = auth.username;
+            redisSender.set("philipshue.auth.login", JSON.stringify(auth));
+
+            console.log("Subscribing to lights_request");
+            redisReceiver.subscribe("lights_request");
+
+            console.log("Starting PollScanner at " + pollScannerDelayms + " microseconds.");
+            setInterval(pollScanner, pollScannerDelayms);
+        }
     });
 
+};
+
+philipsHueAuth();

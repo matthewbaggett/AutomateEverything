@@ -4,6 +4,7 @@
   "description": "Monitor for Owl Intuition units",
   "dependencies": {
     "colorspaces": "^0.1.4",
+    "mysql": "^2.10.2",
     "philips-hue": "^1.1.9",
     "phpjs": "^1.3.2",
     "redis": "^2.4.2"

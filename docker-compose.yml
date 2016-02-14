@@ -14,6 +14,7 @@ monitor-philips-hue:
       - ./monitors/philips-hue:/app
   links:
    - redis
+   - mysql
 
 #monitor-redis:
 #  build: monitors/redis
@@ -27,26 +28,26 @@ applications-power-alert:
   links:
     - redis
 
-#mysql:
-#  image: 'mysql:latest'
-#  environment:
-#    - MYSQL_DATABASE=automate
-#    - MYSQL_PASSWORD=Gx3Ocw7Jhl9GVNd
-#    - MYSQL_ROOT_PASSWORD=cN6Dox5UEXZ0VEo
-#    - MYSQL_USER=automate
-#  ports:
-#    - '3306'
-#  restart: always
+mysql:
+  image: 'mysql:latest'
+  environment:
+    - MYSQL_DATABASE=automate
+    - MYSQL_PASSWORD=Gx3Ocw7Jhl9GVNd
+    - MYSQL_ROOT_PASSWORD=cN6Dox5UEXZ0VEo
+    - MYSQL_USER=automate
+  ports:
+    - '3306'
+  restart: always
 
-#phpmyadmin:
-#  image: 'corbinu/docker-phpmyadmin:latest'
-#  environment:
-#    - VIRTUAL_HOST=mysql.ae.dev
-#  links:
-#    - mysql
-#  ports:
-#    - '80'
-#  restart: always
+phpmyadmin:
+  image: 'corbinu/docker-phpmyadmin:latest'
+  environment:
+    - VIRTUAL_HOST=mysql.ae.dev
+  links:
+    - mysql
+  ports:
+    - '80'
+  restart: always
 
 redis:
   image: 'redis:latest'
