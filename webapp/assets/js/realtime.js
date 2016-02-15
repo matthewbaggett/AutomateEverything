@@ -14,7 +14,7 @@ socket.on('redis-monitor', function (data) {
     }
     if(data[0] == 'publish'){
         jQuery('tbody', redisEventTable)
-            .append("<tr>" +
+            .prepend("<tr>" +
                 "<td>" + data[1] + "</td>" +
                 "<td>" + data[2] + "</td>" +
                 "</tr>");
