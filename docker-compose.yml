@@ -1,32 +1,32 @@
-monitor-owl-intuition:
-  build: monitors/owl-intuition
-  #image: 'automateeverything/monitor-owl-intuition:latest'
-  #volumes:
-  #  - ./monitors/owl-intuition:/app
-  links:
-    - redis
-  ports:
-    - "22600:22600/udp"
-
-monitor-philips-hue:
-  build: monitors/philips-hue
-  volumes:
-      - ./monitors/philips-hue:/app
-  links:
-   - redis
-   - mysql
+#monitor-owl-intuition:
+#  build: monitors/owl-intuition
+#  #image: 'automateeverything/monitor-owl-intuition:latest'
+#  #volumes:
+#  #  - ./monitors/owl-intuition:/app
+#  links:
+#    - redis
+#  ports:
+#    - "22600:22600/udp"
+#
+#monitor-philips-hue:
+#  build: monitors/philips-hue
+#  volumes:
+#      - ./monitors/philips-hue:/app
+#  links:
+#   - redis
+#   - mysql
 
 #monitor-redis:
 #  build: monitors/redis
 #  links:
 #   - redis
 
-applications-power-alert:
-  build: applications/power-alert
-  volumes:
-    - ./applications/power-alert:/app
-  links:
-    - redis
+#applications-power-alert:
+#  build: applications/power-alert
+#  volumes:
+#    - ./applications/power-alert:/app
+#  links:
+#    - redis
 
 mysql:
   image: 'mysql:latest'
@@ -39,15 +39,15 @@ mysql:
     - '3306'
   restart: always
 
-phpmyadmin:
-  image: 'corbinu/docker-phpmyadmin:latest'
-  environment:
-    - VIRTUAL_HOST=mysql.ae.dev
-  links:
-    - mysql
-  ports:
-    - '80'
-  restart: always
+#phpmyadmin:
+#  image: 'corbinu/docker-phpmyadmin:latest'
+#  environment:
+#    - VIRTUAL_HOST=mysql.ae.dev
+#  links:
+#    - mysql
+#  ports:
+#    - '80'
+#  restart: always
 
 redis:
   image: 'redis:latest'
@@ -76,6 +76,9 @@ webapp-realtime:
   links:
     - redis
     - mysql
+  environment:
+    - REDIS_OVERRIDE_HOST=10.0.0.99
+    - REDIS_OVERRIDE_PORT=1759
   ports:
     - '9998:5000'
   restart: always

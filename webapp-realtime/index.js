@@ -2,25 +2,41 @@ const os = require("os");
 const fs = require('fs');
 const php = require('phpjs');
 const util = require("util");
+const redis = require("redis");
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var environment = php.ksort(process.env);
 
-// Connect to REDIS
-var redis = require("redis");
-var redisReceiver = redis.createClient({
-    host: environment.REDIS_PORT_6379_TCP_ADDR,
-    port: environment.REDIS_PORT_6379_TCP_PORT
+var default_port = 5000;
+
+// Set up HTTP listener
+http.listen(default_port, function () {
+    console.log(os.hostname() + ' listening on *:' + default_port);
 });
+
+// Connect to REDIS
+var redisConfig;
+if(typeof environment.REDIS_OVERRIDE_HOST != 'undefined'){
+    redisConfig = {
+        host: environment.REDIS_OVERRIDE_HOST,
+        port: environment.REDIS_OVERRIDE_PORT
+    };
+}else {
+    redisConfig = {
+        host: environment.REDIS_PORT_6379_TCP_ADDR,
+        port: environment.REDIS_PORT_6379_TCP_PORT
+    };
+}
+var redisReceiver = redis.createClient(redisConfig);
 
 // Start app.
 io.on('connection', function (socket) {
     console.log('a user connected');
 
     socket.emit('server information', {
-        host: os.hostname(),
+        host: os.hostname()
     });
 
     socket.on('disconnect', function () {

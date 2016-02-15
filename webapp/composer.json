@@ -16,7 +16,8 @@
         "zendframework/zend-soap": "^2.5",
         "thru.io/active_record": ">=0.4",
         "twbs/bootstrap": "^3.3",
-        "predis/predis": "^1.0"
+        "predis/predis": "^1.0",
+        "components/jquery": "^2.2"
     },
     "autoload": {
         "psr-4": {
