@@ -51,4 +51,21 @@ phpmyadmin:
 
 redis:
   image: 'redis:latest'
+  ports:
+    - '1759:6379'
+
+webapp:
+  build: ./webapp
+  volumes:
+   - ./webapp:/app
+  links:
+    - redis
+    - mysql
+  environment:
+    - VIRTUAL_HOST=ae.dev
+    - REDIS_OVERRIDE_HOST=10.0.0.99
+    - REDIS_OVERRIDE_PORT=1759
+  ports:
+    - '9999:80'
+  restart: always
 

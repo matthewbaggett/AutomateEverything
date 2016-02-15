@@ -66,3 +66,16 @@ redis:
   image: 'redis:latest'
   tags:
     - homelab
+  ports:
+    - '1759:6379'
+
+webapp:
+  image: automateeverything/webapp
+  links:
+    - redis
+    - mysql
+  environment:
+    - VIRTUAL_HOST=ae.dev
+  ports:
+    - '80'
+  restart: always
