@@ -70,7 +70,7 @@ var processColourChange = function(key, colour){
     var updatedLightState = {
         on: colour.brightness > 0,
         xy: xy,
-        bri: Math.ceil(colour.brightness * 255) + 1
+        bri: Math.ceil(colour.brightness * 255)
     };
     //console.log("updated light state:");
     //console.log(updatedLightState);
