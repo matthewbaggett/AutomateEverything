@@ -79,3 +79,12 @@ webapp:
   ports:
     - '80'
   restart: always
+
+webapp-realtime:
+  image: automateeverything/webapp-realtime
+  links:
+    - redis
+    - mysql
+  ports:
+    - '5000'
+  restart: always

@@ -69,3 +69,13 @@ webapp:
     - '9999:80'
   restart: always
 
+webapp-realtime:
+  build: ./webapp-realtime
+  volumes:
+   - ./webapp-realtime:/app
+  links:
+    - redis
+    - mysql
+  ports:
+    - '9998:5000'
+  restart: always
