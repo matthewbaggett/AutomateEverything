@@ -1,22 +1,20 @@
 <?php
-namespace DevExercize\Models;
+namespace AE\Models;
 
 use \Thru\ActiveRecord\ActiveRecord;
 
 /**
- * Class Quote
+ * Class PowerConsumption
  * @package DevExercize\Models
- * @var $quote_id INTEGER
- * @var $ticker_code VARCHAR(16)
- * @var $value DECIMAL(12,6)
+ * @var $power_reading_id INTEGER
+ * @var $watts INTEGER
  * @var $created DATETIME
  */
-class Quote extends ActiveRecord
+class PowerConsumption extends ActiveRecord
 {
-    protected $_table = "ticker_quotes";
-    public $quote_id;
-    public $ticker_code;
-    public $value = 0;
+    protected $_table = "power";
+    public $power_reading_id;
+    public $watts;
     public $created;
 
     public function save($automatic_reload = true)

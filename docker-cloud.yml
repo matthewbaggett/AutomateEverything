@@ -37,6 +37,16 @@ applications-power-alert:
     - homelab
   autoredeploy: true
 
+applications-capture-data:
+  #build: applications/capture-data
+  image: automateeverything/applications-capture-data
+  links:
+    - redis
+    - mysql
+  tags:
+    - homelab
+  autoredeploy: true
+
 mysql:
   image: 'mysql:latest'
   environment:
