@@ -49,21 +49,22 @@ $app->get('/redis', function (\Slim\Http\Request $request, \Slim\Http\Response $
     $keys = $redis->keys('*');
     $redisKeys = [];
     foreach ($keys as $key) {
-        $redisKeys[] = [
+        $redisKeys[$key] = [
             'key' => $key,
             'value' => $redis->get($key)
         ];
     }
+    ksort($redisKeys);
 
     return $this->view->render($response, 'redis/view.html.twig', [
-        'redisKeys' => $redisKeys
+        'redisKeys' => array_values($redisKeys),
     ]);
 })->setName('redis');
 
 $app->get('/power', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
 
     $powerConsumptionRecords = \AE\Models\PowerConsumption::search()
-        ->order('created','DESC')
+        ->order('created', 'DESC')
         ->where("created", date("Y-m-d H:i:s", strtotime('1 month ago')), ">=")
         ->exec();
 

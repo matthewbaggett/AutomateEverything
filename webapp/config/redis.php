@@ -1,8 +1,8 @@
 <?php
 // Connect to Redis
-if(!isset($environment['REDIS_OVERRIDE_HOST'])){
+if (!isset($environment['REDIS_OVERRIDE_HOST'])) {
     $redis = new Predis\Client(parse_url($environment['REDIS_1_PORT']));
-}else{
+} else {
     $redis = new Predis\Client([
         'scheme' => 'tcp',
         'host' => $environment['REDIS_OVERRIDE_HOST'],

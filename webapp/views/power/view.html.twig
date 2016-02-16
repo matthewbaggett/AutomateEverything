@@ -54,8 +54,6 @@
                                 {% for powerConsumption in powerConsumptionRecords %}
                                 [Date.UTC({{ powerConsumption.created|date("Y") }}, {{ powerConsumption.created|date("m") }}, {{ powerConsumption.created|date("d") }}, {{ powerConsumption.created|date("H") }}, {{ powerConsumption.created|date("i") }}, {{ powerConsumption.created|date("s") }}), {{ powerConsumption.watts }}],
                                 {% endfor %}
-
-
                             ]
                         }]
                     });
