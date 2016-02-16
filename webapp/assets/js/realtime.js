@@ -18,6 +18,18 @@ socket.on('redis-monitor', function (data) {
                 "<td>" + data[1] + "</td>" +
                 "<td>" + data[2] + "</td>" +
                 "</tr>");
-
+        var checkboxSelector = '#redis-events-shown div[redisevent='+mangle(data[1])+']';
+        console.log(checkboxSelector);
+        console.log(jQuery(checkboxSelector));
+        if(jQuery(checkboxSelector).length == 0) {
+            jQuery('#redis-events-shown')
+                .append('<div class="checkbox" redisevent="' + mangle(data[1]) + '">' +
+                    '<label><input type="checkbox" checked>' + data[1] + '</label>' +
+                    '</div>');
+        }
     }
+});
+
+jQuery(document).on('change', '#redis-events-shown :checkbox', function(){
+    
 });
