@@ -3,7 +3,6 @@ require('vendor/autoload.php');
 require('config/env.php');
 require('config/mysql.php');
 require('config/redis.php');
-use \DevExercize\Models\Quote;
 
 // Create Slim app
 $app = new \Slim\App(
@@ -24,7 +23,7 @@ $container = $app->getContainer();
 $view = new \Slim\Views\Twig(
     __DIR__ . '/views',
     [
-    'cache' => $container->get('settings')['debug'] ? false : __DIR__ . '/cache'
+        'cache' => $container->get('settings')['debug'] ? false : __DIR__ . '/cache'
     ]
 );
 
@@ -36,16 +35,19 @@ $view->addExtension(new Slim\Views\TwigExtension(
 // Register Twig View helper
 $container->register($view);
 
+// Write some default variables available to every template
+$view->offsetSet('realtime_url', $environment['REALTIME_URL']);
+
 $app->get('/', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
     header("Location: /redis");
     exit;
 });
 
 $app->get('/redis', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
-global $redis;
+    global $redis;
     $keys = $redis->keys('*');
     $redisKeys = [];
-    foreach($keys as $key){
+    foreach ($keys as $key) {
         $redisKeys[] = [
           'key' => $key,
           'value' => $redis->get($key)
@@ -56,15 +58,6 @@ global $redis;
         'redisKeys' => $redisKeys
     ]);
 })->setName('redis');
-
-$app->post('/companies/lookup', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
-    // we're just going to redirect the user so we had a nice POST submit function and a nice
-    // friendly URL for the resulting page (and for bots)
-    $tickerCode = $request->getParsedBodyParam('company');
-    header("Location: /companies/{$tickerCode}");
-    exit;
-});
-
 
 // Run app
 $app->run();

@@ -75,16 +75,23 @@ webapp:
     - redis
     - mysql
   environment:
-    - VIRTUAL_HOST=ae.dev
+    - VIRTUAL_HOST=automateeverything.thru.io
+    - REALTIME_URL=realtime.automateeverything.thru.io
   ports:
     - '80'
   restart: always
+  tags:
+    - homelab
 
 webapp-realtime:
   image: automateeverything/webapp-realtime
   links:
     - redis
     - mysql
+  environment:
+    - VIRTUAL_HOST=realtime.automateeverything.thru.io
   ports:
     - '5000'
   restart: always
+  tags:
+    - homelab

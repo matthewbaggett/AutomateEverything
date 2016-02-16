@@ -63,6 +63,7 @@ webapp:
     - mysql
   environment:
     - VIRTUAL_HOST=ae.dev
+    - REALTIME_URL=ae.dev:9998
     - REDIS_OVERRIDE_HOST=10.0.0.99
     - REDIS_OVERRIDE_PORT=1759
   ports:
