@@ -16,6 +16,7 @@ var redis = require("redis"),
 owl.on('electricity', function( event ) {
     event = JSON.parse(event);
     console.log("Drawing " + event.channels[0][0].current + event.channels[0][0].units);
+    redisSender.set('owlintuition.watts', event.channels[0][0].current);
     redisSender.publish('electricity', JSON.stringify({
         watts: event.channels[0][0].current
     }));
