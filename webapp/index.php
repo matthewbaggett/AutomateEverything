@@ -68,8 +68,12 @@ $app->get('/power', function (\Slim\Http\Request $request, \Slim\Http\Response $
         ->where("created", date("Y-m-d H:i:s", strtotime('1 month ago')), ">=")
         ->exec();
 
+    $watts = array_map(create_function('$o', 'return $o->watts;'), $powerConsumptionRecords);
+
     return $this->view->render($response, 'power/view.html.twig', [
-        'powerConsumptionRecords' => $powerConsumptionRecords
+        'powerConsumptionRecords' => $powerConsumptionRecords,
+        'count_datapoints' => count($watts),
+        'average_watts' => number_format(array_sum($watts) / count($watts), 0)
     ]);
 })->setName('redis');
 

@@ -8,19 +8,25 @@
                 $(function () {
                     $('#chart-power-consumption').highcharts({
                         chart: {
-                            type: 'spline'
+                            type: 'areaspline'
                         },
                         title: {
                             text: 'Power Consumption for the last 30 days'
                         },
                         subtitle: {
-                            text: 'Hello Mum'
+                            text: '{{ average_watts }} watts average. Showing {{ count_datapoints }} datapoints'
                         },
                         xAxis: {
                             type: 'datetime',
                             dateTimeLabelFormats: { // don't display the dummy year
-                                month: '%e. %b',
-                                year: '%b'
+                                millisecond: '%H:%M:%S.%L',
+                                second: '%H:%M:%S',
+                                minute: '%H:%M',
+                                hour: '%H:%M',
+                                day: '%e. %b',
+                                week: '%e. %b',
+                                month: '%b \'%y',
+                                year: '%Y'
                             },
                             title: {
                                 text: 'Date'
@@ -32,16 +38,20 @@
                             },
                             //min: 0
                         },
+                        credits: {
+                            enabled: false
+                        },
                         tooltip: {
                             headerFormat: '<b>{series.name}</b><br>',
-                            pointFormat: '{point.y:.0f} watts'
+                            pointFormat: '{point.x:%Y/%m/%d %H:%M:%S}: <b>{point.y:.0f} watts</b>'
                         },
 
                         plotOptions: {
-                            spline: {
+                            areaspline: {
                                 marker: {
-                                    enabled: true
-                                }
+                                    enabled: false
+                                },
+                                fillOpacity: 0.5
                             }
                         },
 
