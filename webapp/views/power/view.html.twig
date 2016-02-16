@@ -1,0 +1,66 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <h1>Power Consumption</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="chart-power-consumption" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <script>
+                $(function () {
+                    $('#chart-power-consumption').highcharts({
+                        chart: {
+                            type: 'spline'
+                        },
+                        title: {
+                            text: 'Power Consumption for the last 30 days'
+                        },
+                        subtitle: {
+                            text: 'Hello Mum'
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            dateTimeLabelFormats: { // don't display the dummy year
+                                month: '%e. %b',
+                                year: '%b'
+                            },
+                            title: {
+                                text: 'Date'
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Watts'
+                            },
+                            //min: 0
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{series.name}</b><br>',
+                            pointFormat: '{point.y:.0f} watts'
+                        },
+
+                        plotOptions: {
+                            spline: {
+                                marker: {
+                                    enabled: true
+                                }
+                            }
+                        },
+
+                        series: [{
+                            name: 'Month use in Watts',
+                            // Define the data points. All series have a dummy year
+                            // of 1970/71 in order to be compared on the same x axis. Note
+                            // that in JavaScript, months start at 0 for January, 1 for February etc.
+                            data: [
+                                {% for powerConsumption in powerConsumptionRecords %}
+                                [Date.UTC({{ powerConsumption.created|date("Y") }}, {{ powerConsumption.created|date("m") }}, {{ powerConsumption.created|date("d") }}, {{ powerConsumption.created|date("H") }}, {{ powerConsumption.created|date("i") }}, {{ powerConsumption.created|date("s") }}), {{ powerConsumption.watts }}],
+                                {% endfor %}
+
+
+                            ]
+                        }]
+                    });
+                });
+            </script>
+        </div>
+    </div>
+{% endblock %}

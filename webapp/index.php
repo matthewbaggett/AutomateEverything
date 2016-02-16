@@ -60,13 +60,14 @@ $app->get('/redis', function (\Slim\Http\Request $request, \Slim\Http\Response $
 })->setName('redis');
 
 $app->get('/power', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
-    $power = \AE\Models\PowerConsumption::search()
+
+    $powerConsumptionRecords = \AE\Models\PowerConsumption::search()
         ->order('created','DESC')
-        ->where("created", date("Y-m-d H:i:s", strtotime('1 month ago')))
+        ->where("created", date("Y-m-d H:i:s", strtotime('1 month ago')), ">=")
         ->exec();
-    \Kint::dump($power);exit;
-    return $this->view->render($response, 'redis/view.html.twig', [
-        'power' => $power
+
+    return $this->view->render($response, 'power/view.html.twig', [
+        'powerConsumptionRecords' => $powerConsumptionRecords
     ]);
 })->setName('redis');
 
