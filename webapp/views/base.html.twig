@@ -31,10 +31,15 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Automate Everything</a>
             </div>
-            <div id="navbar" class="navbar-collapse ">
+            <div id="navbar" class="navbar pull-left">
                 <ul class="nav navbar-nav">
                     <li><a href="/redis">Redis Explorer</a></li>
                     <li><a href="/power">Power Consumption</a></li>
+                </ul>
+            </div>
+            <div class="navbar pull-right ">
+                <ul class="nav navbar-nav">
+                    <li class="watts-counter"><a>{{ current_watts }} watts</a></li>
                 </ul>
             </div>
         </div>

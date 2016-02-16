@@ -30,25 +30,38 @@ if(typeof environment.REDIS_OVERRIDE_HOST != 'undefined'){
     };
 }
 var redisReceiver = redis.createClient(redisConfig);
+var redisMonitor = redis.createClient(redisConfig);
 
 // Start app.
 io.on('connection', function (socket) {
-    console.log('a user connected');
+    //console.log('a user connected');
 
     socket.emit('server information', {
         host: os.hostname()
     });
 
     socket.on('disconnect', function () {
-        console.log('user disconnected');
+        //console.log('user disconnected');
     });
 });
 
-redisReceiver.monitor(function (err, res) {
+
+redisReceiver.on("message", function(channel, message){
+    console.log("Emit: " + channel + ": " + message);
+    message = JSON.parse(message);
+    io.emit(channel, JSON.stringify(message));
+});
+
+redisReceiver.subscribe("electricity");
+
+redisMonitor.monitor(function (err, res) {
     console.log("Entering monitoring mode.");
 });
 
-redisReceiver.on("monitor", function (time, args) {
-    console.log(time + ": " + util.inspect(args));
+redisMonitor.on("monitor", function (time, args) {
+    //console.log(time + ": " + util.inspect(args));
     io.emit("redis-monitor", JSON.stringify(args));
 });
+
+
+

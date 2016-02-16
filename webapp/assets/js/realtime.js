@@ -19,8 +19,8 @@ socket.on('redis-monitor', function (data) {
                 "<td>" + data[2] + "</td>" +
                 "</tr>");
         var checkboxSelector = '#redis-events-shown div[redisevent='+mangle(data[1])+']';
-        console.log(checkboxSelector);
-        console.log(jQuery(checkboxSelector));
+//        console.log(checkboxSelector);
+//        console.log(jQuery(checkboxSelector));
         if(jQuery(checkboxSelector).length == 0) {
             jQuery('#redis-events-shown')
                 .append('<div class="checkbox" redisevent="' + mangle(data[1]) + '">' +
@@ -28,6 +28,11 @@ socket.on('redis-monitor', function (data) {
                     '</div>');
         }
     }
+});
+
+socket.on('electricity', function(data){
+    data = JSON.parse(data);
+    jQuery('.watts-counter a').empty().append(data.watts + " watts");
 });
 
 jQuery(document).on('change', '#redis-events-shown :checkbox', function(){

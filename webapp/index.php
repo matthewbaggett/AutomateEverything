@@ -37,6 +37,7 @@ $container->register($view);
 
 // Write some default variables available to every template
 $view->offsetSet('realtime_url', $environment['REALTIME_URL']);
+$view->offsetSet('current_watts', is_numeric($redis->get('owlintuition.watts')) ? $redis->get('owlintuition.watts') : '???');
 
 $app->get('/', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
     header("Location: /redis");
