@@ -1,4 +1,4 @@
-var socket = io('http://localhost:9998');
+var socket = io(realtime_url);
 
 var mangle = function (string) {
     return string.replace(/:/g, '').replace(/\./g, '');

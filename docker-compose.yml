@@ -83,3 +83,15 @@ webapp-realtime:
   ports:
     - '9998:5000'
   restart: always
+
+monitor-ip-camera:
+  build: ./monitors/ip-camera
+  volumes:
+    - ./monitors/ip-camera:/app
+  restart: always
+  links:
+    - redis
+  environment:
+    - REDIS_OVERRIDE_HOST=10.0.0.99
+    - REDIS_OVERRIDE_PORT=1759
+    - CAMERA_PATHS=rtsp://guest:guest@10.0.0.81:554/onvif1,rtsp://guest:guest@10.0.0.82:554/onvif1

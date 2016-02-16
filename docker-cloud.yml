@@ -90,6 +90,7 @@ webapp:
   ports:
     - '80'
   restart: always
+  autoredeploy: true
   tags:
     - homelab
 
@@ -103,5 +104,6 @@ webapp-realtime:
   ports:
     - '5000'
   restart: always
+  autoredeploy: true
   tags:
     - homelab
