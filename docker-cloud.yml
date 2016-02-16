@@ -63,7 +63,7 @@ mysql:
 phpmyadmin:
   image: 'corbinu/docker-phpmyadmin:latest'
   environment:
-    - VIRTUAL_HOST=mysql.ae.dev
+    - VIRTUAL_HOST=mysql.automateeverything.thru.io
   links:
     - mysql
   ports:
