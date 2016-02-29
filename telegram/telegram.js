@@ -17,6 +17,8 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
     bot.sendMessage(fromId, resp);
 });
 
+bot.sendMessage()
+
 // Any kind of message
 //bot.on('message', function (msg) {
 //    var chatId = msg.chat.id;

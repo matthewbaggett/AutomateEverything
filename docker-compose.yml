@@ -25,8 +25,8 @@
 #  build: applications/power-alert
 #  volumes:
 #    - ./applications/power-alert:/app
-#  links:
-#    - redis
+  links:
+    - redis
 
 mysql:
   image: 'mysql:latest'
@@ -39,15 +39,15 @@ mysql:
     - '3306'
   restart: always
 
-#phpmyadmin:
-#  image: 'corbinu/docker-phpmyadmin:latest'
-#  environment:
-#    - VIRTUAL_HOST=mysql.ae.dev
-#  links:
-#    - mysql
-#  ports:
-#    - '80'
-#  restart: always
+phpmyadmin:
+  image: 'corbinu/docker-phpmyadmin:latest'
+  environment:
+    - VIRTUAL_HOST=mysql.ae.dev
+  links:
+    - mysql
+  ports:
+    - '80'
+  restart: always
 
 redis:
   image: 'redis:latest'
@@ -95,3 +95,7 @@ monitor-ip-camera:
     - REDIS_OVERRIDE_HOST=10.0.0.99
     - REDIS_OVERRIDE_PORT=1759
     - CAMERA_PATHS=rtsp://guest:guest@10.0.0.81:554/onvif1,rtsp://guest:guest@10.0.0.82:554/onvif1
+    - AWS_ACCESS_KEY_ID=AKIAJGTS4QIERGRFACPA
+    - AWS_SECRET_ACCESS_KEY=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
+    - AWS_REGION=eu-west-1
+    - AWS_S3_BUCKET_RAW=home-security-cameras

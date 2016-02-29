@@ -1,50 +1,35 @@
 monitor-owl-intuition:
-  #build: monitors/owl-intuition
   image: 'automateeverything/monitor-owl-intuition:latest'
   links:
     - redis
   ports:
     - "22600:22600/udp"
-  tags:
-    - homelab
   autoredeploy: true
 
 monitor-philips-hue:
-  #build: monitors/philips-hue
   image: automateeverything/monitor-philips-hue
   links:
    - redis
    - mysql
-  tags:
-    - homelab
   autoredeploy: true
 
 monitor-redis:
-  #build: monitors/redis
   image: automateeverything/monitor-redis
   links:
    - redis
-  tags:
-    - homelab
   autoredeploy: true
 
 applications-power-alert:
-  #build: applications/power-alert
   image: automateeverything/applications-power-alert
   links:
     - redis
-  tags:
-    - homelab
   autoredeploy: true
 
-applications-capture-data:
-  #build: applications/capture-data
+application-capture-data:
   image: automateeverything/applications-capture-data
   links:
     - redis
     - mysql
-  tags:
-    - homelab
   autoredeploy: true
 
 mysql:
@@ -57,8 +42,6 @@ mysql:
   ports:
     - '3306'
   restart: always
-  tags:
-    - homelab
 
 phpmyadmin:
   image: 'corbinu/docker-phpmyadmin:latest'
@@ -69,8 +52,6 @@ phpmyadmin:
   ports:
     - '80'
   restart: always
-  tags:
-    - homelab
 
 redis:
   image: 'redis:latest'
@@ -91,8 +72,6 @@ webapp:
     - '80'
   restart: always
   autoredeploy: true
-  tags:
-    - homelab
 
 webapp-realtime:
   image: automateeverything/webapp-realtime
@@ -105,5 +84,3 @@ webapp-realtime:
     - '5000'
   restart: always
   autoredeploy: true
-  tags:
-    - homelab
