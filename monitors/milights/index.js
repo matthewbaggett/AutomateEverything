@@ -34,6 +34,11 @@ MilightsMonitor.prototype.begin = function(){
     this.milight.on();
     this.milight.zone([1,2,3,4]).rgb('#FF0000');
     this.milight.zone([1,2,3,4]).off();
+    this.setColour([1,2,3,4], {
+        red:0,
+        green:0,
+        blue:0
+    });
 };
 
 MilightsMonitor.prototype.initialiseListeners = function(){
@@ -76,7 +81,10 @@ MilightsMonitor.prototype.processColourChange = function(message){
 };
 
 MilightsMonitor.prototype.parseDeviceInventoryRequest = function(message){
-    redisSender.publish('device_inventory_response', JSON.stringify(inventory));
+    redisSender.publish('device_inventory_response', JSON.stringify({
+        agent: 'monitor-milights',
+        inventory: inventory
+    }));
 };
 
 MilightsMonitor.prototype.setColour = function(zone, colour){
@@ -98,9 +106,11 @@ MilightsMonitor.prototype.setColour = function(zone, colour){
 
 MilightsMonitor.prototype.updateInventory = function(zone, colour){
     inventory["zone_" + zone] = {
-        name: 'milights' + '/' + 'zone_' + zone,
+        name: 'philips-hue' + '/' + 'zone_' + zone,
         type: 'lightbulb',
         state: {
+            on: true, // Lies.
+            brightness: 1, // milights needs to support brightness controls.
             colour: {
                 red: colour.red,
                 green: colour.green,

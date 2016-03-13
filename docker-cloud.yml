@@ -19,6 +19,18 @@ monitor-philips-hue:
     - homelab
   autoredeploy: true
 
+monitor-milights:
+  #build: monitors/milights
+  image: automateeverything/monitor-milights
+  links:
+   - redis
+   - mysql
+  environment:
+   - MILIGHTS_HOST=10.0.0.93
+  tags:
+    - homelab
+  autoredeploy: true
+
 monitor-redis:
   #build: monitors/redis
   image: automateeverything/monitor-redis
@@ -35,6 +47,24 @@ applications-power-alert:
     - redis
   tags:
     - homelab
+  autoredeploy: true
+
+applications-rave-generator:
+  #build: applications/rave-generator
+  image: automateeverything/applications-rave-generator
+  links:
+    - redis
+  tags:
+    - homelab
+  autoredeploy: true
+
+applications-device-list-poller:
+  #build: applications/device-list-poller
+  image: automateeverything/applications-device-list-poller
+  links:
+    - redis
+  tags:
+      - homelab
   autoredeploy: true
 
 applications-capture-data:

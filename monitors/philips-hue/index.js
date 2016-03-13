@@ -16,6 +16,8 @@ var redisReceiver = redis.createClient({
 
 var hue = new Hue();
 
+var inventory = {};
+
 var pollScannerDelayms = 1000;
 
 var lightState = {};
@@ -62,7 +64,11 @@ PhilipsHueMonitor.prototype.philipsHueAuth = function() {
             hue.bridge = auth.ip;
             hue.username = auth.username;
             redisSender.set("philipshue.auth.login", JSON.stringify(auth));
-            setInterval(scope.pollScanner, pollScannerDelayms);
+            setInterval(function() {
+                console.log("bloop");
+                scope.pollScanner(scope);
+            }, pollScannerDelayms
+            );
             scope.startSubscribers();
         }
     });
@@ -70,34 +76,48 @@ PhilipsHueMonitor.prototype.philipsHueAuth = function() {
 
 
 PhilipsHueMonitor.prototype.begin = function(){
-    this.philipsHueAuth();
-};
-
-PhilipsHueMonitor.prototype.startSubscribers = function(){
     var scope = this;
-    redisReceiver.subscribe("lights_request");
-
+    this.philipsHueAuth();
+    redisReceiver.subscribe("device_inventory_request");
     redisReceiver.on("message", function(channel, message) {
         message = JSON.parse(message);
         if (channel == "lights_request") {
-            hue.getLights()
-                .then(function (lights) {
-                    for (var key in lights) {
-                        if (lights.hasOwnProperty(key)) {
-                            if (typeof message.colour.white != 'undefined') {
-                                // Handle a white colour temperature
-                                scope.processWhiteChange(key, message.colour);
-                            } else if (typeof message.colour.red != 'undefined') {
-                                // Handle a colour request
-                                scope.processColourChange(key, message.colour);
-                            } else {
-                                console.log("Invalid light request.");
-                            }
-                        }
-                    }
-                });
+            scope.parseLightsRequest(message);
+        }
+        if (channel == "device_inventory_request") {
+            scope.parseDeviceInventoryRequest();
         }
     });
+};
+
+PhilipsHueMonitor.prototype.parseDeviceInventoryRequest = function(message){
+    redisSender.publish('device_inventory_response', JSON.stringify({
+        agent: 'monitor-philips-hue',
+        inventory: inventory
+    }));
+};
+
+PhilipsHueMonitor.prototype.parseLightsRequest = function(message){
+    hue.getLights()
+        .then(function (lights) {
+            for (var key in lights) {
+                if (lights.hasOwnProperty(key)) {
+                    if (typeof message.colour.white != 'undefined') {
+                        // Handle a white colour temperature
+                        scope.processWhiteChange(key, message.colour);
+                    } else if (typeof message.colour.red != 'undefined') {
+                        // Handle a colour request
+                        scope.processColourChange(key, message.colour);
+                    } else {
+                        console.log("Invalid light request.");
+                    }
+                }
+            }
+        });
+}
+
+PhilipsHueMonitor.prototype.startSubscribers = function(){
+    redisReceiver.subscribe("lights_request");
 };
 
 PhilipsHueMonitor.prototype.kelvinToCt = function(kelvin){
@@ -143,7 +163,27 @@ PhilipsHueMonitor.prototype.processWhiteChange = function(key, colour){
         .catch(console.error);
 };
 
-PhilipsHueMonitor.prototype.pollScanner = function(){
+PhilipsHueMonitor.prototype.updateInventory = function(light){
+    var col = colorspaces.make_color('CIEXYZ', [light.state.xy[0], light.state.xy[1], light.state.bri/254]);
+    var colour = col.as('sRGB');
+    console.log("updateInventory");
+    inventory[light.name] = {
+        name: 'milights' + '/' + light.name,
+        type: 'lightbulb',
+        state: {
+            on: light.state.on,
+            brightness: light.state.bri/254,
+            colour: {
+                red: colour[0],
+                green: colour[1],
+                blue: colour[2]
+            }
+        }
+    };
+};
+
+PhilipsHueMonitor.prototype.pollScanner = function(scope){
+    console.log("pollscanner");
     hue.getLights()
         .then(function (lights) {
             for (var key in lights) {
@@ -163,8 +203,8 @@ PhilipsHueMonitor.prototype.pollScanner = function(){
                     redisSender.set("philipshue.lights." + light.uniqueid, lightJson);
                 }
                 lightState[uniqueId] = light;
+                scope.updateInventory(light);
             }
-
         })
         .catch(function (err) {
             console.error(err.stack || err);
