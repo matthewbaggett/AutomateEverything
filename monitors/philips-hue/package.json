@@ -1,7 +1,7 @@
 {
   "name": "AutomateEverythingMonitorOwlIntuition",
   "version": "0.0.1",
-  "description": "Monitor for Owl Intuition units",
+  "description": "Monitor for Philips Hue Bulbs",
   "dependencies": {
     "colorspaces": "^0.1.4",
     "mysql": "^2.10.2",
@@ -11,6 +11,6 @@
   },
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "node /app/index.js"
   }
 }
