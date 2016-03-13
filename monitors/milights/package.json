@@ -1,0 +1,16 @@
+{
+  "name": "AutomateEverythingMonitorMilights",
+  "version": "0.0.1",
+  "description": "Monitor for Milights bulbs",
+  "dependencies": {
+    "colorspaces": "^0.1.4",
+    "mysql": "^2.10.2",
+    "phpjs": "^1.3.2",
+    "redis": "^2.4.2",
+    "milight": "^1.0.0"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  }
+}
