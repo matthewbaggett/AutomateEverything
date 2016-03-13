@@ -5,6 +5,8 @@ const util = require("util");
 
 var environment = php.ksort(process.env);
 
+console.log(environment);
+
 // Connect to REDIS
 var redis = require("redis"),
     redisReceiver = redis.createClient({
