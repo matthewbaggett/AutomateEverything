@@ -35,6 +35,11 @@ applications-rave-generator:
   links:
     - redis
 
+applications-device-list-poller:
+  build: applications/device-list-poller
+  links:
+    - redis
+
 mysql:
   image: 'mysql:latest'
   environment:
