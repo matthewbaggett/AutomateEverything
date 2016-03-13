@@ -1,30 +1,37 @@
-#monitor-owl-intuition:
-#  build: monitors/owl-intuition
-#  #image: 'automateeverything/monitor-owl-intuition:latest'
-#  #volumes:
-#  #  - ./monitors/owl-intuition:/app
-#  links:
-#    - redis
-#  ports:
-#    - "22600:22600/udp"
-#
-#monitor-philips-hue:
-#  build: monitors/philips-hue
-#  volumes:
-#      - ./monitors/philips-hue:/app
-#  links:
-#   - redis
-#   - mysql
+monitor-owl-intuition:
+  build: monitors/owl-intuition
+  #image: 'automateeverything/monitor-owl-intuition:latest'
+  links:
+    - redis
+  ports:
+    - "22600:22600/udp"
 
-#monitor-redis:
-#  build: monitors/redis
-#  links:
-#   - redis
+monitor-philips-hue:
+  build: monitors/philips-hue
+  links:
+   - redis
+   - mysql
+
+monitor-milights:
+  build: monitors/milights
+  links:
+   - redis
+   - mysql
+  environment:
+   - MILIGHTS_HOST=10.0.0.93
+
+monitor-redis:
+  build: monitors/redis
+  links:
+   - redis
 
 #applications-power-alert:
 #  build: applications/power-alert
-#  volumes:
-#    - ./applications/power-alert:/app
+#  links:
+#    - redis
+
+applications-rave-generator:
+  build: applications/rave-generator
   links:
     - redis
 
@@ -64,38 +71,37 @@ webapp:
   environment:
     - VIRTUAL_HOST=ae.dev
     - REALTIME_URL=ae.dev:9998
-    - REDIS_OVERRIDE_HOST=10.0.0.99
-    - REDIS_OVERRIDE_PORT=1759
+    #- REDIS_OVERRIDE_HOST=10.0.0.100
+    #- REDIS_OVERRIDE_PORT=1759
   ports:
     - '9999:80'
   restart: always
 
 webapp-realtime:
   build: ./webapp-realtime
-  volumes:
-   - ./webapp-realtime:/app
   links:
     - redis
     - mysql
   environment:
-    - REDIS_OVERRIDE_HOST=10.0.0.99
-    - REDIS_OVERRIDE_PORT=1759
+    - DUMMY=veryyes
+    #- REDIS_OVERRIDE_HOST=10.0.0.100
+    #- REDIS_OVERRIDE_PORT=1759
   ports:
     - '9998:5000'
   restart: always
 
-monitor-ip-camera:
-  build: ./monitors/ip-camera
-  volumes:
-    - ./monitors/ip-camera:/app
-  restart: always
-  links:
-    - redis
-  environment:
-    - REDIS_OVERRIDE_HOST=10.0.0.99
-    - REDIS_OVERRIDE_PORT=1759
-    - CAMERA_PATHS=rtsp://guest:guest@10.0.0.81:554/onvif1,rtsp://guest:guest@10.0.0.82:554/onvif1
-    - AWS_ACCESS_KEY_ID=AKIAJGTS4QIERGRFACPA
-    - AWS_SECRET_ACCESS_KEY=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
-    - AWS_REGION=eu-west-1
-    - AWS_S3_BUCKET_RAW=home-security-cameras
+#monitor-ip-camera:
+#  build: ./monitors/ip-camera
+#  volumes:
+#    - ./monitors/ip-camera:/app
+#  restart: always
+#  links:
+#    - redis
+#  environment:
+#    - REDIS_OVERRIDE_HOST=10.0.0.99
+#    - REDIS_OVERRIDE_PORT=1759
+#    - CAMERA_PATHS=rtsp://guest:guest@10.0.0.81:554/onvif1,rtsp://guest:guest@10.0.0.82:554/onvif1
+#    - AWS_ACCESS_KEY_ID=AKIAJGTS4QIERGRFACPA
+#    - AWS_SECRET_ACCESS_KEY=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
+#    - AWS_REGION=eu-west-1
+#    - AWS_S3_BUCKET_RAW=home-security-cameras
