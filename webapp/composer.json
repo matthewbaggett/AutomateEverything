@@ -17,7 +17,8 @@
         "thru.io/active_record": ">=0.4",
         "twbs/bootstrap": "^3.3",
         "predis/predis": "^1.0",
-        "components/jquery": "^2.2"
+        "components/jquery": "^2.2",
+        "matthewbaggett/php-onvif": "dev-master"
     },
     "autoload": {
         "psr-4": {

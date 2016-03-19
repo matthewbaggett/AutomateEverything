@@ -77,5 +77,30 @@ $app->get('/power', function (\Slim\Http\Request $request, \Slim\Http\Response $
     ]);
 })->setName('redis');
 
+$app->get("/cameras", function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
+
+    $onvif = new ponvif();
+    $onvif->setIPAddress("10.0.0.80:5000");
+    $onvif->setUsername("admin");
+    $onvif->setPassword("427411");
+    $onvif->initialize();
+    
+    #$onvif->ptz_RelativeMove("MainStream",-0.5,0,0,0);
+
+    !\Kint::dump(
+        $onvif->getSources(),
+        $onvif->getCapabilities(),
+        $onvif->getMediaUri(),
+        $onvif->getUsername(),
+        $onvif->getPassword(),
+        $onvif->getPTZUri()
+    );
+
+    exit;
+    return $this->view->render($response, 'camera/view.html.twig', [
+        
+    ]);
+});
+
 // Run app
 $app->run();
