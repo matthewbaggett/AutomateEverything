@@ -95,18 +95,23 @@ webapp-realtime:
     - '9998:5000'
   restart: always
 
-#monitor-ip-camera:
-#  build: ./monitors/ip-camera
-#  volumes:
-#    - ./monitors/ip-camera:/app
-#  restart: always
-#  links:
-#    - redis
-#  environment:
-#    - REDIS_OVERRIDE_HOST=10.0.0.99
-#    - REDIS_OVERRIDE_PORT=1759
-#    - CAMERA_PATHS=rtsp://guest:guest@10.0.0.81:554/onvif1,rtsp://guest:guest@10.0.0.82:554/onvif1
-#    - AWS_ACCESS_KEY_ID=AKIAJGTS4QIERGRFACPA
-#    - AWS_SECRET_ACCESS_KEY=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
-#    - AWS_REGION=eu-west-1
-#    - AWS_S3_BUCKET_RAW=home-security-cameras
+monitor-ip-camera:
+  build: ./monitors/ip-camera
+  volumes:
+    - ./monitors/ip-camera:/app
+  restart: always
+  links:
+    - redis
+  environment:
+    - CAMERA_DRIVEWAY_HOST=10.0.0.82
+    - CAMERA_DRIVEWAY_PORT=554
+    - CAMERA_DRIVEWAY_AUTH=guest:guest
+    - CAMERA_DRIVEWAY_MEDIAPATH=/onvif1
+    - CAMERA_FRONT_HOST=10.0.0.80
+    - CAMERA_FRONT_PORT=554
+    - CAMERA_FRONT_AUTH=guest:guest
+    - CAMERA_FRONT_MEDIAPATH=/onvif1
+    - AWS_ACCESS_KEY_ID=AKIAJGTS4QIERGRFACPA
+    - AWS_SECRET_ACCESS_KEY=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
+    - AWS_REGION=eu-west-1
+    - AWS_S3_BUCKET_RAW=home-security-cameras
