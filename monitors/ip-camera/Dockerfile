@@ -1,5 +1,13 @@
 FROM thruio/docker-webapp:php7
 
+RUN add-apt-repository ppa:mc3man/trusty-media && \
+    apt-get update && \
+    apt-get -yq install \
+        livemedia-utils \
+        ffmpeg && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*.deb
+
 ADD . /app
 RUN composer install
 

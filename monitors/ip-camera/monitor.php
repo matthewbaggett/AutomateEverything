@@ -16,16 +16,24 @@ foreach($environment as $key => $value){
     }
 }
 
+\Kint::dump($cameras);
+
 foreach($cameras as $camera_name => $camera){
     $pid = pcntl_fork();
     if($pid == -1){
         die ("Could not fork :(\n");
     }else if ($pid){
         // parent
-        pcntl_wait($status);
     }else{
         // child
         echo " > Camera: {$camera_name}\n";
-        echo "Create blocking thread to capture video\n";
+        $name = strtolower($camera_name);
+        $host = $camera['HOST'];
+        $port = $camera['PORT'];
+        $auth = $camera['AUTH'];
+        $mediapath = $camera['MEDIAPATH'];
+
+        $ffmpeg_command = "ffmpeg -i rtsp://{$auth}@{$host}:{$port}{$mediapath} -c copy -map 0 -acodec mp2 -f segment -strftime 1 -segment_time 60 -segment_format mp4 {$name}_%Y-%m-%d_%H-%M-%S.mp4";
+        //passthru($ffmpeg_command);
     }
 }
