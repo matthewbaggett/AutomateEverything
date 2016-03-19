@@ -16,9 +16,7 @@ foreach($environment as $key => $value){
     }
     $cameras[$elements[1]]['NAME'] = $elements[1];
 }
-
-\Kint::dump($cameras);
-exit;
+unset($cameras['']);
 
 while($camera = array_pop($cameras)) {
     $pid = pcntl_fork();
