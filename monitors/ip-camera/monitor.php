@@ -18,6 +18,7 @@ foreach($environment as $key => $value){
 }
 
 \Kint::dump($cameras);
+exit;
 
 while($camera = array_pop($cameras)) {
     $pid = pcntl_fork();
@@ -27,6 +28,7 @@ while($camera = array_pop($cameras)) {
         // parent
     } else {
         // child
+        \Kint::dump($camera);exit;
         $name = strtolower($camera['NAME']);
         $host = $camera['HOST'];
         $port = $camera['PORT'];
