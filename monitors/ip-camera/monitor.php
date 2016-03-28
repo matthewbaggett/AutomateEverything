@@ -16,8 +16,8 @@ foreach($environment as $key => $value){
 }
 unset($cameras['']);
 echo "\nStarting monitors...\n";
-
-while($camera = array_pop($cameras)) {
+sleep(5); // Give ffserver a chance to boot
+foreach($cameras as $camera){
     $pid = pcntl_fork();
     if ($pid == -1) {
         die ("Could not fork :(\n");
@@ -33,7 +33,12 @@ while($camera = array_pop($cameras)) {
         $mediapath = $camera['MEDIAPATH'];
         echo " > Camera: {$name}\n";
 
-        $ffmpeg_command = "ffmpeg -i rtsp://{$auth}@{$host}:{$port}{$mediapath} -c copy -map 0 -acodec mp2 -f segment -strftime 1 -segment_time 60 -segment_format mp4 {$name}_%Y-%m-%d_%H-%M-%S.mp4";
-        //passthru($ffmpeg_command);
+        $videoProcess = new \AE\IpCamera\VideoProcess($name, "rtsp://{$auth}@{$host}:{$port}{$mediapath}");
+        $videoProcess->run();
+        exit;
+
     }
+}
+while(true){
+    sleep(30);
 }

@@ -18,12 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-            "AE\\": "src"
+            "AE\\IpCamera\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AE\\Test\\": "tests/"
+            "AE\\IpCamera\\Test\\": "tests/"
         }
     }
 }

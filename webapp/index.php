@@ -78,7 +78,7 @@ $app->get('/power', function (\Slim\Http\Request $request, \Slim\Http\Response $
 })->setName('redis');
 
 $app->get("/cameras", function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) {
-
+/*
     $onvif = new ponvif();
     $onvif->setIPAddress("10.0.0.80:5000");
     $onvif->setUsername("admin");
@@ -97,8 +97,9 @@ $app->get("/cameras", function (\Slim\Http\Request $request, \Slim\Http\Response
     );
 
     exit;
+*/
     return $this->view->render($response, 'camera/view.html.twig', [
-        
+              
     ]);
 });
 

@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <h1>Camera Viewer</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Camera 1</h2>
+            <video width="480" height="270" autoplay>
+                <source src="http://localhost:8090/feed.webm" type="video/webm">
+            </video>
+        </div>
+    </div>
+{% endblock %}
