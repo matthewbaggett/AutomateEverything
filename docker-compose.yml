@@ -99,7 +99,7 @@ monitor-ip-camera:
   build: ./monitors/ip-camera
   volumes:
     - ./monitors/ip-camera:/app
-    - /tmp/videos:/app/videos
+    - /scratch/CCTV/videos:/app/videos
   restart: always
   ports:
     - '8090:8090'
@@ -110,20 +110,15 @@ monitor-ip-camera:
     - CAMERA_FRONT_PORT=554
     - CAMERA_FRONT_AUTH=guest:guest
     - CAMERA_FRONT_MEDIAPATH=/onvif1
-    #- CAMERA_YARD_HOST=10.0.0.81
-    #- CAMERA_YARD_PORT=554
-    #- CAMERA_YARD_AUTH=guest:guest
-    #- CAMERA_YARD_MEDIAPATH=/onvif1
-    #- CAMERA_DRIVEWAY_HOST=10.0.0.82
-    #- CAMERA_DRIVEWAY_PORT=554
-    #- CAMERA_DRIVEWAY_AUTH=guest:guest
-    #- CAMERA_DRIVEWAY_MEDIAPATH=/onvif1
-    #- CAMERA_OFFICE_HOST=thruio.plus.com
-    #- CAMERA_OFFICE_PORT=28000
-    #- CAMERA_OFFICE_AUTH=guest:guest
-    #- CAMERA_OFFICE_MEDIAPATH=/onvif1
-
-    - AWS_ACCESS_KEY_ID=AKIAJGTS4QIERGRFACPA
-    - AWS_SECRET_ACCESS_KEY=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
-    - AWS_REGION=eu-west-1
-    - AWS_S3_BUCKET_RAW=home-security-cameras
+    - CAMERA_YARD_HOST=10.0.0.81
+    - CAMERA_YARD_PORT=554
+    - CAMERA_YARD_AUTH=guest:guest
+    - CAMERA_YARD_MEDIAPATH=/onvif1
+    - CAMERA_DRIVEWAY_HOST=10.0.0.82
+    - CAMERA_DRIVEWAY_PORT=554
+    - CAMERA_DRIVEWAY_AUTH=guest:guest
+    - CAMERA_DRIVEWAY_MEDIAPATH=/onvif1
+    - CAMERA_OFFICE_HOST=thruio.plus.com
+    - CAMERA_OFFICE_PORT=28000
+    - CAMERA_OFFICE_AUTH=guest:guest
+    - CAMERA_OFFICE_MEDIAPATH=/onvif1
