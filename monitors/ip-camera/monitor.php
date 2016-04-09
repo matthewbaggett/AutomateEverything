@@ -7,8 +7,8 @@ ksort($environment);
 
 $cameras = [];
 
-foreach($environment as $key => $value){
-    if(substr($key, 0, 7) == 'CAMERA_'){
+foreach ($environment as $key => $value) {
+    if (substr($key, 0, 7) == 'CAMERA_') {
         $elements = explode("_", $key);
         $cameras[$elements[1]][$elements[2]] = $value;
         $cameras[$elements[1]]['NAME'] = $elements[1];
@@ -17,11 +17,11 @@ foreach($environment as $key => $value){
 unset($cameras['']);
 echo "\nStarting monitors...\n";
 sleep(5); // Give ffserver a chance to boot
-foreach($cameras as $camera){
+foreach ($cameras as $camera) {
     $pid = pcntl_fork();
     if ($pid == -1) {
-        die ("Could not fork :(\n");
-    } else if ($pid) {
+        die("Could not fork :(\n");
+    } elseif ($pid) {
         // parent
         continue;
     } else {
@@ -36,9 +36,8 @@ foreach($cameras as $camera){
         $videoProcess = new \AE\IpCamera\VideoProcess($name, "rtsp://{$auth}@{$host}:{$port}{$mediapath}");
         $videoProcess->run();
         exit;
-
     }
 }
-while(true){
+while (true) {
     sleep(30);
 }

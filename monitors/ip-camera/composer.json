@@ -16,6 +16,15 @@
         "predis/predis": "^1.0",
         "matthewbaggett/php-onvif": "dev-master"
     },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "dev-master",
+        "fabpot/php-cs-fixer": "^2.0@dev",
+        "johnkary/phpunit-speedtrap": "~1.0@dev",
+        "lstrojny/phpunit-clever-and-smart": "0.*",
+        "brianium/paratest": "dev-master",
+        "fzaninotto/Faker": "dev-master",
+        "phpunit/phpunit": "5.*"
+    },
     "autoload": {
         "psr-4": {
             "AE\\IpCamera\\": "src"
