@@ -101,8 +101,6 @@ monitor-ip-camera:
     - ./monitors/ip-camera:/app
     - /scratch/CCTV/videos:/app/videos
   restart: always
-  ports:
-    - '8090:8090'
   links:
     - redis
   environment:

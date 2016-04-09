@@ -137,3 +137,29 @@ webapp-realtime:
   autoredeploy: true
   tags:
     - homelab
+
+monitor-ip-camera:
+  build: ./monitors/ip-camera
+  volumes:
+    - ./monitors/ip-camera:/app
+    - /scratch/CCTV/videos:/app/videos
+  restart: always
+  links:
+    - redis
+  environment:
+    - CAMERA_FRONT_HOST=10.0.0.80
+    - CAMERA_FRONT_PORT=554
+    - CAMERA_FRONT_AUTH=guest:guest
+    - CAMERA_FRONT_MEDIAPATH=/onvif1
+    - CAMERA_YARD_HOST=10.0.0.81
+    - CAMERA_YARD_PORT=554
+    - CAMERA_YARD_AUTH=guest:guest
+    - CAMERA_YARD_MEDIAPATH=/onvif1
+    - CAMERA_DRIVEWAY_HOST=10.0.0.82
+    - CAMERA_DRIVEWAY_PORT=554
+    - CAMERA_DRIVEWAY_AUTH=guest:guest
+    - CAMERA_DRIVEWAY_MEDIAPATH=/onvif1
+    - CAMERA_OFFICE_HOST=thruio.plus.com
+    - CAMERA_OFFICE_PORT=28000
+    - CAMERA_OFFICE_AUTH=guest:guest
+    - CAMERA_OFFICE_MEDIAPATH=/onvif1
