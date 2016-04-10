@@ -5,6 +5,7 @@ monitor-owl-intuition:
     - redis
   ports:
     - "22600:22600/udp"
+  restart: always
   tags:
      - homelab
 
@@ -14,6 +15,7 @@ monitor-philips-hue:
   links:
    - redis
    - mysql
+  restart: always
   tags:
    - homelab
 
@@ -25,6 +27,7 @@ monitor-milights:
    - mysql
   environment:
    - MILIGHTS_HOST=10.0.0.93
+  restart: always
   tags:
    - homelab
 
@@ -33,6 +36,7 @@ monitor-redis:
   image: automateeverything/monitor-redis:latest
   links:
    - redis
+  restart: always
   tags:
    - homelab
 
@@ -87,7 +91,8 @@ phpmyadmin:
 redis:
   image: 'redis:latest'
   ports:
-    - '1759:6379'
+    - '6379:6379'
+  restart: always
   tags:
      - homelab
 
