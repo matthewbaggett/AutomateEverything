@@ -102,6 +102,8 @@ webapp:
     - REALTIME_URL=ae.dev:9998
     #- REDIS_OVERRIDE_HOST=10.0.0.100
     #- REDIS_OVERRIDE_PORT=1759
+  ports:
+   - '80'
   restart: always
   tags:
    - homelab
@@ -145,5 +147,6 @@ monitor-ip-camera:
     - CAMERA_OFFICE_PORT=28000
     - CAMERA_OFFICE_AUTH=guest:guest
     - CAMERA_OFFICE_MEDIAPATH=/onvif1
+    - CAMERA_SEGMENT_TIME_MINUTES=15
   tags:
     - homelab
