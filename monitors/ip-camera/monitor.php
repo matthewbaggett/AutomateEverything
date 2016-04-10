@@ -34,7 +34,10 @@ foreach ($cameras as $camera) {
         echo " > Camera: {$name}\n";
 
         $videoProcess = new \AE\IpCamera\VideoProcess($name, "rtsp://{$auth}@{$host}:{$port}{$mediapath}");
-        $videoProcess->run();
+        // set segment time to 1/4 hour
+        $videoProcess
+            ->setSegmentTime(60*15)
+            ->run();
         exit;
     }
 }
