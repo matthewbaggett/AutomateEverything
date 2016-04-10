@@ -6,76 +6,58 @@ monitor-owl-intuition:
   ports:
     - "22600:22600/udp"
   tags:
-    - homelab
-  autoredeploy: true
+     - homelab
 
 monitor-philips-hue:
   #build: monitors/philips-hue
-  image: automateeverything/monitor-philips-hue
+  image: automateeverything/monitor-philips-hue:latest
   links:
    - redis
    - mysql
   tags:
-    - homelab
-  autoredeploy: true
+   - homelab
 
 monitor-milights:
   #build: monitors/milights
-  image: automateeverything/monitor-milights
+  image: automateeverything/monitor-milights:latest
   links:
    - redis
    - mysql
   environment:
    - MILIGHTS_HOST=10.0.0.93
   tags:
-    - homelab
-  autoredeploy: true
+   - homelab
 
 monitor-redis:
   #build: monitors/redis
-  image: automateeverything/monitor-redis
+  image: automateeverything/monitor-redis:latest
   links:
    - redis
   tags:
-    - homelab
-  autoredeploy: true
+   - homelab
 
-applications-power-alert:
-  #build: applications/power-alert
-  image: automateeverything/applications-power-alert
-  links:
-    - redis
-  tags:
-    - homelab
-  autoredeploy: true
+#applications-power-alert:
+#  build: applications/power-alert
+#  links:
+#    - redis
+#  tags:
+#    - homelab
 
 applications-rave-generator:
   #build: applications/rave-generator
-  image: automateeverything/applications-rave-generator
+  image: automateeverything/applications-rave-generator:latest
   links:
     - redis
   tags:
-    - homelab
-  autoredeploy: true
+     - homelab
 
-applications-device-list-poller:
-  #build: applications/device-list-poller
-  image: automateeverything/applications-device-list-poller
-  links:
-    - redis
-  tags:
-      - homelab
-  autoredeploy: true
-
-applications-capture-data:
-  #build: applications/capture-data
-  image: automateeverything/applications-capture-data
-  links:
-    - redis
-    - mysql
-  tags:
-    - homelab
-  autoredeploy: true
+#applications-device-list-poller:
+#  #build: applications/device-list-poller
+#  image: automateeverything/applications-device-list-poller:latest
+#  links:
+#    - redis
+#  tags:
+#    - homelab
 
 mysql:
   image: 'mysql:latest'
@@ -88,60 +70,60 @@ mysql:
     - '3306'
   restart: always
   tags:
-    - homelab
+     - homelab
 
 phpmyadmin:
   image: 'corbinu/docker-phpmyadmin:latest'
   environment:
-    - VIRTUAL_HOST=mysql.automateeverything.thru.io
+    - VIRTUAL_HOST=mysql.ae.dev
   links:
     - mysql
   ports:
     - '80'
   restart: always
   tags:
-    - homelab
+     - homelab
 
 redis:
   image: 'redis:latest'
-  tags:
-    - homelab
   ports:
     - '1759:6379'
+  tags:
+     - homelab
 
 webapp:
-  image: automateeverything/webapp
+  image: automateeverything/webapp:latest
   links:
     - redis
     - mysql
+  target_num_containers: 2
   environment:
-    - VIRTUAL_HOST=automateeverything.thru.io
-    - REALTIME_URL=realtime.automateeverything.thru.io
-  ports:
-    - '80'
+    - VIRTUAL_HOST=ae.dev
+    - REALTIME_URL=ae.dev:9998
+    #- REDIS_OVERRIDE_HOST=10.0.0.100
+    #- REDIS_OVERRIDE_PORT=1759
   restart: always
-  autoredeploy: true
   tags:
-    - homelab
+   - homelab
 
 webapp-realtime:
-  image: automateeverything/webapp-realtime
+  image: automateeverything/webapp-realtime:latest
   links:
     - redis
     - mysql
   environment:
-    - VIRTUAL_HOST=realtime.automateeverything.thru.io
+    - DUMMY=veryyes
+    #- REDIS_OVERRIDE_HOST=10.0.0.100
+    #- REDIS_OVERRIDE_PORT=1759
   ports:
-    - '5000'
+    - '9998:5000'
   restart: always
-  autoredeploy: true
   tags:
-    - homelab
+     - homelab
 
 monitor-ip-camera:
-  build: ./monitors/ip-camera
+  image: automateeverything/monitor-ip-camera:latest
   volumes:
-    - ./monitors/ip-camera:/app
     - /scratch/CCTV/videos:/app/videos
   restart: always
   links:
@@ -163,3 +145,5 @@ monitor-ip-camera:
     - CAMERA_OFFICE_PORT=28000
     - CAMERA_OFFICE_AUTH=guest:guest
     - CAMERA_OFFICE_MEDIAPATH=/onvif1
+  tags:
+    - homelab
