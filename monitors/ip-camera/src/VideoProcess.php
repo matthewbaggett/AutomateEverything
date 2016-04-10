@@ -2,6 +2,8 @@
 
 namespace AE\IpCamera;
 
+use Predis\Client as RedisClient;
+
 class VideoProcess
 {
 
@@ -17,6 +19,27 @@ class VideoProcess
 
     // Streaming settings
     protected $stream_resolution = 'hd480';
+    
+    /** @var RedisClient */
+    protected $redis;
+
+    /**
+     * @return RedisClient
+     */
+    public function getRedis()
+    {
+        return $this->redis;
+    }
+
+    /**
+     * @param RedisClient $redis
+     * @return VideoProcess
+     */
+    public function setRedis(RedisClient $redis)
+    {
+        $this->redis = $redis;
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -152,15 +175,24 @@ class VideoProcess
 
     public function run()
     {
-        //$ffmpeg_command = "ffmpeg -i {$this->path} -b:a 32k -b:v 64k -maxrate 128k -bufsize 512k -vf scale={$this->stream_resolution} http://localhost:8090/feed1.ffm";
-        $dir = "/app/videos/{$this->name}";
+        $this->getRedis()->publish("cameras/debug", "{$this->getName()}: Starting Camera Monitoring for {$this->getName()}");
+        $dir = "/app/videos/{$this->getName()}";
         if(!file_exists($dir)){
             mkdir($dir, 0777, true);
+            $this->getRedis()->publish("cameras/debug", "{$this->getName()}: mkdir {$dir}");
         }
-        $ffmpeg_command = "ffmpeg -i {$this->path} -c copy -map 0 -acodec {$this->audio_codec} -f segment -strftime 1 -segment_time {$this->segment_time} -segment_format {$this->format} {$dir}/{$this->timestamp_format}.mp4 ";
+        $this->getRedis()->publish("cameras/debug", "{$this->getName()}: Segment time is {$this->getSegmentTime()}");
+        $this->getRedis()->publish("cameras/debug", "{$this->getName()}: Format is {$this->getFormat()}");
+        $this->getRedis()->publish("cameras/debug", "{$this->getName()}: Audio is {$this->getAudioCodec()}");
+        $this->getRedis()->publish("cameras/debug", "{$this->getName()}: Source is {$this->getPath()}");
 
-        echo "\n\n\nCommand: {$ffmpeg_command}\n\n\n\n";
+        $ffmpeg_command = "ffmpeg -i {$this->getPath()} -c copy -map 0 -acodec {$this->getAudioCodec()} -f segment -strftime 1 -segment_time {$this->getSegmentTime()} -segment_format {$this->getFormat()} {$dir}/{$this->getTimestampFormat()}.mp4 ";
+
+        $this->getRedis()->publish("cameras/debug", "{$this->getName()}: command: {$ffmpeg_command}");
 
         exec($ffmpeg_command);
+
+        $this->getRedis()->publish("cameras/debug", "{$this->name}: FFMPEG exited.");
+
     }
 }

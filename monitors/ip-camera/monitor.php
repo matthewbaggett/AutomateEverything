@@ -1,6 +1,7 @@
 <?php
 
 require_once("vendor/autoload.php");
+use Predis\Client as RedisClient;
 
 $environment = array_merge($_SERVER, $_ENV);
 ksort($environment);
@@ -14,6 +15,17 @@ foreach ($environment as $key => $value) {
         $cameras[$elements[1]]['NAME'] = $elements[1];
     }
 }
+// Connect to Redis
+if (!isset($environment['REDIS_OVERRIDE_HOST'])) {
+    $redisClient = new RedisClient(parse_url($environment['REDIS_1_PORT']));
+} else {
+    $redisClient = new RedisClient([
+        'scheme' => 'tcp',
+        'host' => $environment['REDIS_OVERRIDE_HOST'],
+        'port' => $environment['REDIS_OVERRIDE_PORT'],
+    ]);
+}
+
 unset($cameras['']);
 echo "\nStarting monitors...\n";
 sleep(5); // Give ffserver a chance to boot
@@ -36,7 +48,8 @@ foreach ($cameras as $camera) {
         $videoProcess = new \AE\IpCamera\VideoProcess($name, "rtsp://{$auth}@{$host}:{$port}{$mediapath}");
         // set segment time to 1/4 hour
         $videoProcess
-            ->setSegmentTime(60*15)
+            ->setRedis($redisClient)
+            ->setSegmentTime(60*(isset($environment['CAMERA_SEGMENT_TIME_MINUTES'])?$environment['CAMERA_SEGMENT_TIME_MINUTES']:30))
             ->run();
         exit;
     }
